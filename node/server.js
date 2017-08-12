@@ -130,7 +130,7 @@ const ERROR = 'error';
 app.use(cors());
 
 http.listen(appEnv.port, () => {
-  console.log('listening on :', port);
+  console.log('listening on :', appEnv.port);
 });
 
 io.on(CONNECTION, (socket) => {
