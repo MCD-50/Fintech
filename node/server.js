@@ -24,6 +24,13 @@ const cfenv = require('cfenv');
 const app = express();
 const bodyParser = require('body-parser')
 
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const cors = require('cors');
+const path = require('path');
+const request = require('request');
+// const port = process.env.PORT || 4000;
+
 // load local VCAP configuration
 let vcapLocal = null
 try {
@@ -64,6 +71,7 @@ app.get('/api/expenses', (req, res) => {
 
 
 app.post('/api/expenses', (req, res) => {
+  console.log(req.body)
   db.create(req.body).then(expenses => {
     res.send(expenses);
   }).catch(err => {
@@ -105,5 +113,75 @@ db.init().then(() => {
   app.listen(appEnv.port, "0.0.0.0", function () {
     // print a message when the server starts listening
     console.log("server starting on " + appEnv.url);
+  });
+});
+
+
+
+import {
+  CONNECTION,
+  JOIN,
+  LEAVE,
+  JOINED,
+  LEFT,
+  MESSAGE,
+  SERVER_URL
+} from './lib/constant';
+
+//app use
+app.use(body_parser.urlencoded({ extended: true }));
+app.use(body_parser.json());
+app.use(express.static(path.join(__dirname, 'lib')));
+app.use(cors());
+
+http.listen(port, () => {
+  console.log('listening on :', port);
+});
+
+io.on(CONNECTION, (socket) => {
+
+  socket.on(JOIN, (room_name) => {
+    //if player is already added then remove
+    socket.join(room_name);
+    io.emit(JOINED, "Joined");
+  });
+
+  socket.on(LEAVE, (room_name) => {
+    //if player is added then remove.
+    socket.leave(room_name);
+    io.emit(LEFT, "Left");
+  });
+
+  socket.on(MESSAGE, (message) => {
+    if(message.toLowerCase().includes('welcome')){
+      io.emit(MESSAGE, { text: message });
+      return;
+    }
+    var options = {
+      method: 'POST',
+      url: SERVER_URL,
+      headers:
+      {
+        'accept': 'application/json',
+        'cache-control': 'no-cache',
+        'content-type': 'application/json'
+      },
+      body:
+      {
+        text: message
+      },
+      json: true
+    };
+
+    request(options, (error, response, body) => {
+      if (error) {
+        io.emit(MESSAGE, { text: 'Something wrong. I answer python questions' });
+      } else if (body) {
+        io.emit(MESSAGE, body.message);
+      }
+    });
+
+    io.emit(MESSAGE, { text: 'Hang on!! getting you there. Im not that cool, I need some time.\n\n\n Processing....' });
+
   });
 });
