@@ -1,6 +1,6 @@
 //import from sysytem
 import React, { Component, PropTypes, } from 'react';
-import { View, Image, StatusBar, TouchableOpacity, Text } from 'react-native';
+import { View, Image, StatusBar, Text } from 'react-native';
 
 //import from app
 import { Page } from '../../enums/Page.js';
@@ -24,10 +24,15 @@ class SplashPage extends Component {
 	componentDidMount() {
 		getData(APP_INFO)
 			.then(res => {
+				console.log(res);
 				if (res) {
 					setTimeout(() => {
-						const page = Page.CHAT_PAGE;
-						this.props.navigator.replace({ id: page.id, name: page.name })
+						const page = Page.HOME_PAGE;
+						this.props.navigator.replace({
+							id: page.id, name: page.name, data: {
+								appInfo: res
+							}
+						})
 					}, 2000);
 				} else {
 					setTimeout(() => {

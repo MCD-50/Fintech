@@ -23,6 +23,10 @@ export const style = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
+	content_padding: {
+		paddingLeft: MARGIN_10,
+		paddingRight: MARGIN_10
+	},
 	splash_page_render_outer_view: {
 		flex: 1,
 		alignItems: 'center',
@@ -47,7 +51,7 @@ export const style = StyleSheet.create({
 	setting_page_inside_card_view: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		padding: MARGIN_5,
+		padding: MARGIN_10,
 	},
 	setting_page_text: {
 		fontSize: 17,

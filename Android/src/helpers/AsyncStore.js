@@ -12,6 +12,7 @@ export const getData = async (key) => {
 }
 
 export const setData = async (key, data) => {
+	console.log(data);
 	try {
 		await AsyncStorage.setItem(key, typeof data == 'object' ? JSON.stringify(data) : data);
 	} catch (error) {

@@ -26,7 +26,6 @@ class SocketClient {
 	onJoin(callback) { this.stateChangeCallbacks.join.push(callback) }
 	onLeft(callback) { this.stateChangeCallbacks.left.push(callback) }
 	initSocket(socket_url) {
-		console.log(socket_url);
 		this.socket = io(socket_url, {
 			transports: ['websocket'],
 		});

@@ -6,7 +6,10 @@ import AlertHelper from '../helpers/AlertHelper.js';
 import {
 	AUTH_URL_BASE,
 	AUTH_URL_LOGIN,
-	AUTH_URL_SIGNUP
+	AUTH_URL_SIGNUP,
+
+	DATABASE_URL_BASE,
+	DATABSE_URL_EXPENSE
 } from '../constants/AppConstant'
 
 export const checkIfNetworkAvailable = () => {
@@ -14,10 +17,10 @@ export const checkIfNetworkAvailable = () => {
 }
 
 export const login = (username, password) => {
-	return resolveRequestNoForm(AUTH_URL_BASE + AUTH_URL_LOGIN, {
+	return resolveRequestNoForm(AUTH_URL_BASE + AUTH_URL_LOGIN, JSON.stringify({
 		username: username,
 		password: password
-	});
+	}));
 }
 
 export const signUp = (username, password) => {
@@ -27,9 +30,14 @@ export const signUp = (username, password) => {
 	}));
 }
 
+export const pushExpense = (data)=>{
+	return resolveRequestNoForm(DATABASE_URL_BASE + DATABSE_URL_EXPENSE, JSON.stringify(data));
+}
+
 export const resolveRequestNoForm = (url, data = null) => {
 	let form = null
 	const method = getMethod(data, true);
+
 	return fetchUrl(url, method)
 		.then((res) => {
 			return Promise.resolve(res);
@@ -65,7 +73,6 @@ const getMethod = (body = null, isData = false) => {
 			},
 			body: body
 		}
-
 		if (isData) {
 			method['headers'] = {
 				'Accept': 'application/json',
@@ -92,7 +99,10 @@ const fetchUrl = (url, method) => {
 					.then((res) => res.json(),
 					(rej) => Promise.reject(rej))
 			}
-			return fetch(url).then((res) => res.json(), (rej) => Promise.reject(rej))
+			return fetch(url).then((res) => {
+				console.log(res);
+				return res.json()
+			}, (rej) => Promise.reject(rej))
 		}, (rej) => {
 			showRejectMessage(rej, null);
 			return Promise.reject()

@@ -23,52 +23,65 @@ export const capitalize = (str) => {
 	return "Unknown";
 }
 
-export const loadAsync = (url, data) => {
-	return resolveRequest(url, data)
-		.then((res) => {
-			if (res && res.message && res.message.length > 0) {
-				return Promise.resolve(res.message)
-			} else {
-				return Promise.reject();
-			}
-		}).catch((rej) => {
-			return Promise.reject(res);
-		})
+export const getAvatarText = (title) => {
+	if (title == null)
+		return 'UN'
+	const capitalized = title.toUpperCase()
+	if (title.length > 2) {
+		return capitalized[0] + capitalized[1];
+	}
+	return capitalized[0]
 }
 
-export const convertToAirchatObject = (communications) => {
-	return communications
-		.filter((communication) => communication != null || communication != undefined)
-		.map((communication) => {
-			return {
-				_id: Math.round(Math.random() * 1000000),
-				text: communication.content.trim() || "",
-				createdAt: communication.creation.split('.')[0],
-				user: {
-					_id: communication.sender,
-					name: communication.sender,
-				},
-				communication: communication,
-				attachments: []
-			}
-		});
+export const getDateInStringFormat = () => {
+	let today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth(); //January is 0!
+	var yyyy = today.getFullYear();
+	return getCreatedOn(yyyy + "-" + mm + "-" + dd);
 }
 
 
-export const createChatItem = (message, link = []) => {
-	//Date.UTC(2016, 7, 30, 17, 20, 0)
-	return [
-		{
-			_id: Math.round(Math.random() * 1000000), 
-			text: message.text, 
-			createdAt: new Date(),
-			user: {
-				_id: COMING_ID,
-				name: COMING_NAME,
-			}, alert: false,
-			communication: null,
-			attachments: link,
-		},
-	];
+const months = [
+	'January',
+	'February',
+	'March',
+	'April',
+	'May',
+	'June',
+	'July',
+	'August',
+	'September',
+	'October',
+	'November',
+	'December'
+]
+
+const getCreatedOn = (createdOn) => {
+	let array = createdOn.split('-');
+	let month = months[array[1]];
+	return array[2] + ' ' + month + ', ' + array[0];
 }
 
+
+export const getDateTime = () => {
+	let today = new Date();
+	var dd = today.getDate();
+	if (dd.toString().length < 2)
+		dd = '0' + dd.toString()
+	var mm = parseInt(today.getMonth()) + 1;
+	if (mm.toString().length < 2)
+		mm = '0' + mm.toString();
+	var yyyy = today.getFullYear();
+	return yyyy + '-' + mm + '-' + dd + ' ' + parseTime(today.getHours(), today.getMinutes(), today.getSeconds())
+}
+
+const parseTime = (hh, mm, ss) => {
+	if (hh.toString().length < 2)
+		hh = '0' + hh;
+	if (mm.toString().length < 2)
+		mm = '0' + mm;
+	if (ss.toString().length < 2)
+		ss = '0' + ss;
+	return hh + ':' + mm + ':' + ss;
+}

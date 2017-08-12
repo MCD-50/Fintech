@@ -7,7 +7,11 @@ export const AUTH_URL_BASE = 'https://auth.commonalty24.hasura-app.io'
 export const AUTH_URL_LOGIN = '/login';
 export const AUTH_URL_SIGNUP = '/signup';
 
+
 export const APP_INFO = 'app_info';
+export const INCOME_INFO = 'income_info';
+export const DATABASE_URL_BASE = 'https://finper.eu-gb.mybluemix.net/api';
+export const DATABSE_URL_EXPENSE = '/expenses'
 
 export const SOCKET_URL = '';
 

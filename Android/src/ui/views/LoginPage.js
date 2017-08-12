@@ -5,6 +5,7 @@ import { View, Text, Image, TextInput, TouchableOpacity, Linking, ScrollView, St
 //import from app
 import { Progress, Toast, Icon } from 'react-native-material-component';
 import { login, signUp } from '../../helpers/InternetHelper.js';
+import { TextField } from 'react-native-material-textfield';
 import { setData, getData } from '../../helpers/AsyncStore.js';
 import { APP_INFO } from '../../constants/AppConstant.js';
 import { style } from '../../constants/AppStyle.js';
@@ -45,44 +46,56 @@ class LoginPage extends Component {
 		this.renderSignInLoading = this.renderSignInLoading.bind(this);
 	}
 
+	componentDidMount() {
+		const page = Page.HOME_PAGE;
+		//this.props.navigator.replace({ id: page.id, name: page.name })
+	}
+
 	onButtonClicked() {
 		this.setState({ progress: true });
 		if (this.isNotEmpty()) {
 			const { email, password } = this.state;
 			signUp(email, password)
 				.then(res => {
-					if (res && res.code && res.code == 'user-already-exists') {
+					if (res && res.message && res.message == 'Password too short') {
+						AlertHelper.showAlert('Error', 'Password too short');
+					} else if (res && res.code && res.code == 'user-already-exists') {
 						login(email, password)
 							.then(_res => {
 								if (_res) {
-									setData(APP_INFO, Object.assign({}, {
+									setData(APP_INFO, JSON.stringify({
 										email,
 										password,
 										hasura_id: _res.hasura_id,
 										auth_token: _res.auth_token
 									}));
-									const page = Page.CHAT_PAGE;
+									const page = Page.HOME_PAGE;
 									this.props.navigator.replace({ id: page.id, name: page.name })
 								}
-							})
+							}).catch(rej => console.log(rej))
 					} else if (res && res.hasura_id) {
-						setData(APP_INFO, Object.assign({}, {
+						setData(APP_INFO, JSON.stringify({
 							email,
 							password,
 							hasura_id: res.hasura_id,
 							auth_token: res.auth_token
 						}));
-						const page = Page.CHAT_PAGE;
+						const page = Page.HOME_PAGE;
 						this.props.navigator.replace({ id: page.id, name: page.name })
 					} else if (res && res.message && res.message == 'Already logged in. Logout to create new user.') {
-						const page = Page.CHAT_PAGE;
-						this.props.navigator.replace({ id: page.id, name: page.name })
+						AlertHelper.showAlert('Error', 'Password too short', (__) => {
+							if (__.Ok) {
+								const page = Page.HOME_PAGE;
+								this.props.navigator.replace({
+									id: page.id, name: page.name,
+								})
+							}
+						});
 					}
 				});
 		} else {
 			AlertHelper.showAlert("Something went wrong.", "Please fill in all the details");
 		}
-		this.setState({ progress: false });
 	}
 
 
@@ -94,11 +107,11 @@ class LoginPage extends Component {
 		return false;
 	}
 
-	onType(e, whichState) {
+	onType(text, whichState) {
 		if (whichState == 1) {
-			this.setState({ email: e.nativeEvent.text });
+			this.setState({ email: text });
 		} else if (whichState == 2) {
-			this.setState({ password: e.nativeEvent.text });
+			this.setState({ password: text });
 		}
 	}
 
@@ -117,37 +130,40 @@ class LoginPage extends Component {
 		return (
 			<View style={[style.container_with_flex_1, { backgroundColor: 'black', }]}>
 				<StatusBar backgroundColor='black' barStyle='light-content' />
-				<View style={[style.align_center_justify_center, { marginTop: 30 }]}>
-					<Image source={appIcon} style={style.small_image_80_height_and_width} resizeMode="contain" />
-				</View>
+				<View style={[style.container_with_flex_1, { justifyContent: 'center', padding: 15 }]}>
 
-				<View style={[style.container_with_flex_1, { justifyContent: 'center', padding: 10 }]}>
-					<TextInput style={[style.text_input_standard_style, { marginTop: 10 }]}
-						placeholder='Email' editable={!this.state.progress}
-						onChange={(e) => this.onType(e, 1)}
-						placeholderTextColor={this.props.placeholderTextColor}
-						multiline={false} autoCapitalize='sentences'
-						enablesReturnKeyAutomatically={true} underlineColorAndroid="transparent" />
+					<TextField
+						label='Username'
+						keyboardType='email-address'
+						value={this.state.email}
+						label='Username or Email'
+						textColor='white'
+						tintColor='white'
+						baseColor='white'
+						tintColor='white'
+						onChangeText={(text) => this.onType(text, 1)} />
 
-					<TextInput style={[style.text_input_standard_style, { marginTop: 10 }]}
-						placeholder='Password'
-						editable={!this.state.progress}
-						onChange={(e) => this.onType(e, 2)}
-						placeholderTextColor={this.props.placeholderTextColor}
-						multiline={false} autoCapitalize='sentences'
-						enablesReturnKeyAutomatically={true} underlineColorAndroid="transparent" />
+					<TextField
+						label='Password'
+						textColor='white'
+						tintColor='white'
+						baseColor='white'
+						tintColor='white'
+						value={this.state.password}
+						secureTextEntry={true}
+						onChangeText={(text) => this.onType(text, 2)} />
 
-					<View style={{ backgroundColor: STATUS_BAR_COLOR, marginTop: 10 }}>
+
+					<View style={{ backgroundColor: 'white', marginTop: 10 }}>
 						<TouchableOpacity style={[style.align_center_justify_center, { height: 40, padding: 15, paddingBottom: 8, paddingTop: 8 }]}
 							onPress={() => this.onButtonClicked()}
 							accessibilityTraits="button">
-							<Text style={[style.text_with_flex_1_and_font_size_17_centered, { color: 'white', fontSize: 16 }]}>
-								Get Started
+							<Text style={[style.text_with_flex_1_and_font_size_17_centered, { color: STATUS_BAR_COLOR, fontSize: 16 }]}>
+								Go away
 							</Text>
 						</TouchableOpacity>
 					</View>
 					{this.renderSignInLoading()}
-
 				</View>
 			</View>
 		);
