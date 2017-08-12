@@ -39,10 +39,8 @@ const appEnvOpts = vcapLocal ? {
 const appEnv = cfenv.getAppEnv(appEnvOpts);
 
 let db;
-if (appEnv.services['cloudantNoSQLDB']) {
-  db = require('./lib/cloudant-db')(appEnv.services['cloudantNoSQLDB'][0].credentials);
-} else if (appEnv.services['compose-for-mongodb']) {
-  db = require('./lib/compose-db')(appEnv.services['compose-for-mongodb'][0].credentials);
+if (appEnv.services['todo-db']) {
+  db = require('./lib/compose-db')(appEnv.services['todo-db'][0].credentials);
 } else {
   db = require('./lib/in-memory')();
 }
@@ -56,45 +54,45 @@ app.use(bodyParser.json()); // parse application/json
 app.use(express.static(__dirname + '/www'));
 
 
-app.get('/api/todos', (req, res) => {
-  db.search().then(todos => {
-    res.send(todos);
+app.get('/api/expenses', (req, res) => {
+  db.search().then(expenses => {
+    res.send(expenses);
   }).catch(err => {
     res.status(500).send({ error: err });
   });
 });
 
 
-app.post('/api/todos', (req, res) => {
-  db.create(req.body).then(todo => {
-    res.send(todo);
+app.post('/api/expenses', (req, res) => {
+  db.create(req.body).then(expenses => {
+    res.send(expenses);
   }).catch(err => {
     res.status(500).send({ error: err });
   });
 });
 
 
-app.get('/api/todos/:id', (req, res) => {
-  db.get(req.params.id).then(todo => {
-    res.send(todo);
+app.get('/api/expenses/:id', (req, res) => {
+  db.read(req.params.id).then(expenses => {
+    res.send(expenses);
   }).catch(err => {
     res.status(500).send({ error: err });
   });
 });
 
 
-app.put('/api/todos/:id', (req, res) => {
-  db.update(req.params.id, req.body).then(todo => {
-    res.send(todo);
+app.put('/api/expenses/:id', (req, res) => {
+  db.update(req.params.id, req.body).then(expenses => {
+    res.send(expenses);
   }).catch(err => {
     res.status(500).send({ error: err });
   });
 });
 
 
-app.delete('/api/todos/:id', (req, res) => {
-  db.delete(req.params.id).then(todo => {
-    res.send(todo);
+app.delete('/api/expenses/:id', (req, res) => {
+  db.delete(req.params.id).then(expenses => {
+    res.send(expenses);
   }).catch(err => {
     res.status(500).send({ error: err });
   });

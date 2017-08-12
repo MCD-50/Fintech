@@ -4,23 +4,23 @@ var app = app || {};
 (function () {
 	'use strict';
 
-	// Todo Router
+	// Expense Router
 	// ----------
-	var TodoRouter = Backbone.Router.extend({
+	var ExpenseRouter = Backbone.Router.extend({
 		routes: {
 			'*filter': 'setFilter'
 		},
 
 		setFilter: function (param) {
 			// Set the current filter to be used
-			app.TodoFilter = param || '';
+			app.ExpenseFilter = param || '';
 
 			// Trigger a collection filter event, causing hiding/unhiding
-			// of Todo view items
-			app.todos.trigger('filter');
+			// of Expense view items
+			app.expenses.trigger('filter');
 		}
 	});
 
-	app.TodoRouter = new TodoRouter();
+	app.ExpenseRouter = new ExpenseRouter();
 	Backbone.history.start();
 })();

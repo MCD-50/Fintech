@@ -1,9 +1,9 @@
 {
  "services": {
-		"PostgreSQL-tb": [
+		"todo-db": [
 			{
 				"credentials": {
-					"db_type": "postgresql",
+					"db_type": "mongodb",
 					"maps": [],
 					"name": "bmix-eude-yp-a9674e17-2820-45ba-af29-cc0bc4779663",
 					"uri_cli": "psql \"sslmode=require host=sl-eu-fra-2-portal.0.dblayer.com port=15912 dbname=compose user=admin\"",
@@ -13,10 +13,10 @@
 				},
 				"syslog_drain_url": null,
 				"volume_mounts": [],
-				"label": "PostgreSQL-tb",
+				"label": "todo-db",
 				"provider": null,
 				"plan": "Standard",
-				"name": "PostgreSQL-tb",
+				"name": "todo-db",
 				"tags": [
 					"big_data",
 					"data_management",
