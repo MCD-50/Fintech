@@ -9,6 +9,7 @@ import {
 } from 'react-native-material-component';
 import { Page } from '../../enums/Page.js';
 import { getTextColor, getAvatarText, getDateTime } from '../../helpers/CollectionHelper';
+import { pushExpense } from '../../helpers/InternetHelper';
 import { style } from '../../constants/AppStyle.js';
 import { STATUS_BAR_COLOR, } from '../../constants/AppColor'
 import { APP_INFO, INCOME_INFO } from '../../constants/AppConstant'
@@ -132,6 +133,7 @@ class HomePage extends Component {
 		DatabaseHelper.getAllItems((results) => {
 			let items = Object.keys(results.rows).map(key => results.rows[key]);
 			this.setStateData(items);
+			pushExpense(items);
 		});
 
 		getData(INCOME_INFO)
@@ -140,7 +142,8 @@ class HomePage extends Component {
 					res = JSON.parse(res);
 					this.setState({ targetSaving: res.targetSaving, currentIncome: res.currentIncome });
 				}
-			})
+			});
+
 	}
 
 	setStateData(results) {

@@ -117,16 +117,15 @@ db.init().then(() => {
 });
 
 
+const CONNECTION = 'connection';
+const MESSAGE = 'message';
+const JOIN = 'join';
+const LEAVE = 'leave';
+const JOINED = 'joined';
+const LEFT = 'left';
+const ERROR = 'error';
 
-const {
-  CONNECTION,
-  JOIN,
-  LEAVE,
-  JOINED,
-  LEFT,
-  MESSAGE,
-  SERVER_URL
-} = require('./lib/constant');
+
 
 app.use(cors());
 
@@ -149,33 +148,33 @@ io.on(CONNECTION, (socket) => {
   });
 
   socket.on(MESSAGE, (message) => {
-    if(message.toLowerCase().includes('welcome')){
+    if (message.toLowerCase().includes('welcome')) {
       io.emit(MESSAGE, { text: message });
       return;
     }
-    var options = {
-      method: 'POST',
-      url: SERVER_URL,
-      headers:
-      {
-        'accept': 'application/json',
-        'cache-control': 'no-cache',
-        'content-type': 'application/json'
-      },
-      body:
-      {
-        text: message
-      },
-      json: true
-    };
+    // var options = {
+    //   method: 'POST',
+    //   url: SERVER_URL,
+    //   headers:
+    //   {
+    //     'accept': 'application/json',
+    //     'cache-control': 'no-cache',
+    //     'content-type': 'application/json'
+    //   },
+    //   body:
+    //   {
+    //     text: message
+    //   },
+    //   json: true
+    // };
 
-    request(options, (error, response, body) => {
-      if (error) {
-        io.emit(MESSAGE, { text: 'Something wrong. I answer python questions' });
-      } else if (body) {
-        io.emit(MESSAGE, body.message);
-      }
-    });
+    // request(options, (error, response, body) => {
+    //   if (error) {
+    //     io.emit(MESSAGE, { text: 'Something wrong. I answer python questions' });
+    //   } else if (body) {
+    //     io.emit(MESSAGE, body.message);
+    //   }
+    // });
 
     io.emit(MESSAGE, { text: 'Hang on!! getting you there. Im not that cool, I need some time.\n\n\n Processing....' });
 
