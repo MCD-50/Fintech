@@ -1,6 +1,6 @@
 //import from app
 import { getData } from './AsyncStore.js';
-import { SERVER_URL } from '../constants/AppConstant.js';
+import { SOCKET_URL } from '../constants/AppConstant.js';
 import SocketClient from './SocketClient.js';
 
 
@@ -17,7 +17,7 @@ export default (socket_message_callback, socket_connect_callback, socket_room_jo
 	socket.onMessage((msg) => socket_message_callback(msg));
 	// socket.onNotification((noti) => socket_message_callback(noti));
 	socket.onJoin(() => socket_room_joined_callback())
-	socket.initSocket(SERVER_URL);
+	socket.initSocket(SOCKET_URL);
 
 
 

@@ -3,13 +3,21 @@ export const MARGIN_16 = 16;
 export const MARGIN_10 = 10;
 export const MARGIN_5 = 5;
 
-export const SERVER_URL = 'http://192.168.43.44:4000'
+export const AUTH_URL_BASE = 'https://auth.commonalty24.hasura-app.io'
+export const AUTH_URL_LOGIN = '/login';
+export const AUTH_URL_SIGNUP = '/signup';
+
+export const APP_INFO = 'app_info';
+
+export const SOCKET_URL = '';
+
 export const ROOM_NAME = 'AIRBOT.AI';
 
 export const COMING_NAME = 'AI';
 export const GOING_NAME = 'Human';
 export const GOING_ID = '123456789';
 export const COMING_ID = '987654321';
+
 
 //app text size
 export const TEXT_SIZE_13 = 13;
@@ -24,9 +32,4 @@ export const TEXT_SIZE_22 = 22;
 
 //app component variables
 export const TOOLBAR_HEIGHT = 55;
-
-//app api constants
-export const SEND_MESSAGE = `${SERVER_URL}/send_message`;
-export const GET_MESSAGE = `${SERVER_URL}/get_message`;
-
 

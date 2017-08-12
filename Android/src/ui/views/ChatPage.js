@@ -110,7 +110,7 @@ class ChatPage extends Component {
 	}
 
 	onRightElementPress(action) {
-		const page = Page.INFO_PAGE;
+		const page = Page.ABOUT_PAGE;
 		this.props.navigator.push({ id: page.id, name: page.name });
 	}
 	//////////

@@ -3,9 +3,40 @@ import { NetInfo } from 'react-native';
 
 //import from app
 import AlertHelper from '../helpers/AlertHelper.js';
+import {
+	AUTH_URL_BASE,
+	AUTH_URL_LOGIN,
+	AUTH_URL_SIGNUP
+} from '../constants/AppConstant'
 
 export const checkIfNetworkAvailable = () => {
 	return NetInfo.isConnected.fetch();
+}
+
+export const login = (username, password) => {
+	return resolveRequestNoForm(AUTH_URL_BASE + AUTH_URL_LOGIN, {
+		username: username,
+		password: password
+	});
+}
+
+export const signUp = (username, password) => {
+	return resolveRequestNoForm(AUTH_URL_BASE + AUTH_URL_SIGNUP, JSON.stringify({
+		username: username,
+		password: password
+	}));
+}
+
+export const resolveRequestNoForm = (url, data = null) => {
+	let form = null
+	const method = getMethod(data, true);
+	return fetchUrl(url, method)
+		.then((res) => {
+			return Promise.resolve(res);
+		})
+		.catch((rej) => {
+			return Promise.reject(rej)
+		});
 }
 
 export const resolveRequest = (url, data = null) => {
@@ -24,9 +55,9 @@ export const resolveRequest = (url, data = null) => {
 		});
 }
 
-const getMethod = (body = null) => {
+const getMethod = (body = null, isData = false) => {
 	if (body) {
-		return {
+		const method = {
 			method: "POST",
 			headers: {
 				'Accept': 'application/json',
@@ -34,6 +65,14 @@ const getMethod = (body = null) => {
 			},
 			body: body
 		}
+
+		if (isData) {
+			method['headers'] = {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			}
+		}
+		return method
 	} else {
 		return {
 			method: "POST",
@@ -49,12 +88,11 @@ const fetchUrl = (url, method) => {
 	return checkIfNetworkAvailable()
 		.then((r) => {
 			if (method) {
-				return fetch(url, method).then((res) => res.json(),
+				return fetch(url, method)
+					.then((res) => res.json(),
 					(rej) => Promise.reject(rej))
 			}
-			return fetch(url).then((res) => {
-				res.json()
-			}, (rej) => Promise.reject(rej))
+			return fetch(url).then((res) => res.json(), (rej) => Promise.reject(rej))
 		}, (rej) => {
 			showRejectMessage(rej, null);
 			return Promise.reject()

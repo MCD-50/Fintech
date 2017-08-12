@@ -5,6 +5,8 @@ import { View, Image, StatusBar, TouchableOpacity, Text } from 'react-native';
 //import from app
 import { Page } from '../../enums/Page.js';
 import { style } from '../../constants/AppStyle.js';
+import { APP_INFO } from '../../constants/AppConstant';
+import { getData } from '../../helpers/AsyncStore';
 const appIcon = require('../../res/appIcon.png');
 
 
@@ -20,10 +22,20 @@ class SplashPage extends Component {
 	}
 
 	componentDidMount() {
-		setTimeout(() => {
-			const page = Page.CHAT_PAGE;
-			this.props.navigator.replace({ id: page.id, name: page.name })
-		}, 2000);
+		getData(APP_INFO)
+			.then(res => {
+				if (res) {
+					setTimeout(() => {
+						const page = Page.CHAT_PAGE;
+						this.props.navigator.replace({ id: page.id, name: page.name })
+					}, 2000);
+				} else {
+					setTimeout(() => {
+						const page = Page.LOGIN_PAGE;
+						this.props.navigator.replace({ id: page.id, name: page.name })
+					}, 2000);
+				}
+			})
 	}
 
 	render() {

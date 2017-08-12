@@ -15,7 +15,7 @@ const propTypes = {
 };
 
 
-class InfoPage extends Component {
+class AboutPage extends Component {
 	constructor(params) {
 		super(params);
 
@@ -104,5 +104,5 @@ class InfoPage extends Component {
 	}
 }
 
-InfoPage.propTypes = propTypes;
-export default InfoPage;
+AboutPage.propTypes = propTypes;
+export default AboutPage;

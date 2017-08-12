@@ -13,6 +13,7 @@ import StateHelper from './src/helpers/StateHelper.js';
 
 //pages 
 import SplashPage from './src/ui/views/SplashPage';
+import LoginPage from './src/ui/views/LoginPage';
 import ChatPage from './src/ui/views/ChatPage';
 import AboutPage from './src/ui/views/AboutPage';
 
@@ -34,8 +35,10 @@ class Kick extends Component {
 		if (id == 1)
 			return <SplashPage navigator={navigator} route={route}/>
 		else if (id == 2)
-			return <ChatPage navigator={navigator} route={route}/>
+			return <LoginPage navigator={navigator} route={route}/>
 		else if (id == 3)
+			return <ChatPage navigator={navigator} route={route}/>
+		else if (id == 4)
 			return <AboutPage navigator={navigator} route={route}/>
 	}
 
