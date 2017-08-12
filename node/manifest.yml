@@ -1,0 +1,6 @@
+applications:
+- name:      finper
+  host:      finper
+  memory:    128M
+  services:
+  - todo-db 
