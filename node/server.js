@@ -118,7 +118,7 @@ db.init().then(() => {
 
 
 
-import {
+const {
   CONNECTION,
   JOIN,
   LEAVE,
@@ -126,15 +126,11 @@ import {
   LEFT,
   MESSAGE,
   SERVER_URL
-} from './lib/constant';
+} = require('./lib/constant');
 
-//app use
-app.use(body_parser.urlencoded({ extended: true }));
-app.use(body_parser.json());
-app.use(express.static(path.join(__dirname, 'lib')));
 app.use(cors());
 
-http.listen(port, () => {
+http.listen(appEnv.port, () => {
   console.log('listening on :', port);
 });
 
