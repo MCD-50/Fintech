@@ -39,7 +39,22 @@ class MLHandler(object):
 				"Mumbai is great",
 				"Buy a house",
 				"Richest thing u can buy is a 32gb laptop",
-				"You can't save money"
+				"You can't save money",
+				"Looks microsoft is alos doing well",
+				"You can find the best nearby god",
+				"Ayush is cool",
+				"My name is Bot, bot hoon mai hard coded",
+				"Mai bot hoon",
+				"Hackathon was good",
+				"Going to mumbai today",
+				"No, This is not a great app. But!!!!",
+				"Food as good",
+				"Don't use readymade library where you can drag and drop the stuff to make things happens",
+				"I'm made using python, node, react native",
+				"React native alternative is VueJS",
+				"Coolest gitrepo is https://www.github.com/mcd-50 Changing the world"
+				"Ok bye",
+				"Most overpriced company is Apple"
 			])
 			# Get a response to an input statement
 			answer =  str(chatbot.get_response(text))
