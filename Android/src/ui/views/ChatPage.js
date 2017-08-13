@@ -65,7 +65,7 @@ class ChatPage extends Component {
     }
 
     onSocketConnectCallback() {
-        //console.log(ROOM_NAME);
+        console.log(ROOM_NAME);
         this.socket.joinRoom(ROOM_NAME)
     }
 

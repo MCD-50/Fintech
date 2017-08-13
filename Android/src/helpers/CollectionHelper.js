@@ -85,3 +85,20 @@ const parseTime = (hh, mm, ss) => {
 		ss = '0' + ss;
 	return hh + ':' + mm + ':' + ss;
 }
+
+export const createChatItem = (message, link = []) => {
+	//Date.UTC(2016, 7, 30, 17, 20, 0)
+	return [
+		{
+			_id: Math.round(Math.random() * 1000000), 
+			text: message.text, 
+			createdAt: new Date(),
+			user: {
+				_id: COMING_ID,
+				name: COMING_NAME,
+			}, alert: false,
+			communication: null,
+			attachments: link,
+		},
+	];
+}

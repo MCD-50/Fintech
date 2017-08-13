@@ -13,7 +13,7 @@ export const INCOME_INFO = 'income_info';
 export const DATABASE_URL_BASE = 'https://finper.eu-gb.mybluemix.net/api';
 export const DATABSE_URL_EXPENSE = '/expenses'
 
-export const SOCKET_URL = 'https://finper.eu-gb.mybluemix.net';
+export const SOCKET_URL = 'https://air-chat-server.herokuapp.com';
 
 export const ROOM_NAME = 'AIRBOT.AI';
 

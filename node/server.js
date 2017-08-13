@@ -70,6 +70,11 @@ app.get('/api/expenses', (req, res) => {
 });
 
 
+app.post('/api/response', (req, res) => {
+  res.send({ message: { text: 'jai ho' } })
+});
+
+
 app.post('/api/expenses', (req, res) => {
   console.log(req.body)
   db.create(req.body).then(expenses => {
