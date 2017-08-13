@@ -44,8 +44,8 @@ class HomePage extends Component {
 			dataSource: ds.cloneWithRows([]),
 
 
-			currentIncome: '',
-			targetSaving: '',
+			currentIncome: '0',
+			targetSaving: '0',
 		};
 
 		this.renderListItem = this.renderListItem.bind(this);
