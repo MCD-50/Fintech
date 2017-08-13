@@ -22,7 +22,10 @@
     "cloudant": "1.6.2",
     "express": "4.14.0",
     "mongodb": "2.2.12",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "cors": "^2.8.3",
+    "request": "^2.81.0",
+    "socket.io": "^2.0.3"
   },
   "devDependencies": {
     "chai": "3.5.0",
