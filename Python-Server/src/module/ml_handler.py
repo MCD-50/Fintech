@@ -5,12 +5,6 @@ import json
 
 from chatterbot import ChatBot
 from textblob import TextBlob
-import htmllib
-import difflib
-import pandas as pd
-import numpy as np
-import sklearn
-from bs4 import BeautifulSoup
 
 
 from src.helper.collection import handle_error, light_error_handle, get_response
