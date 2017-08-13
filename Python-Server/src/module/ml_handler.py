@@ -18,7 +18,6 @@ class MLHandler(object):
 
 	@staticmethod
 	def process(text):
-
 		try:
 			text_blob_text = TextBlob(text)
 			text_blob_text.correct()
@@ -26,22 +25,24 @@ class MLHandler(object):
 
 			chatbot = ChatBot(
 				'MCD-50',
-				trainer='chatterbot.trainers.ChatterBotCorpusTrainer'
+				trainer='chatterbot.trainers.ListTrainer'
 			)
 
-			# Train based on the english corpus
-			chatbot.train("chatterbot.corpus.english")
-
-			# Train based on english greetings corpus
-			chatbot.train("chatterbot.corpus.english.greetings")
-
-			# Train based on the english conversations corpus
-			chatbot.train("chatterbot.corpus.english.conversations")
-
-
+			chatbot.train([
+				"Ya, Hi"
+				"Hi, can I help you?",
+				"If you want something better got for google",
+				"How are you doing",
+				"My name is kick bot",
+				"How are you doing",
+				"You want me to find things nearby you?"
+				"Mumbai is great",
+				"Buy a house",
+				"Richest thing u can buy is a 32gb laptop",
+				"You can't save money"
+			])
 			# Get a response to an input statement
-			answer = chatbot.get_response(text)
-			print answer
+			answer =  str(chatbot.get_response(text))
 			res_json = get_response({'text': answer})
 			return res_json
 		except Exception as exception:

@@ -65,16 +65,14 @@ class ChatPage extends Component {
     }
 
     onSocketConnectCallback() {
-        console.log(ROOM_NAME);
         this.socket.joinRoom(ROOM_NAME)
     }
 
     onRoomJoinedCallback() {
-        this.socket.sendMessage('Welcome there..\n\nCurrently I answer only python questions.');
+        this.socket.sendMessage('Welcome there.. Currently I"m hot.');
     }
 
 
-    ///////////
     renderSend(props) {
         return (<Send {...props } />);
     }
