@@ -21,7 +21,7 @@ import EditExpensePage from './src/ui/views/EditExpensePage';
 import ViewExpensePage from './src/ui/views/ViewExpensePage';
 import ProfilePage from './src/ui/views/ProfilePage';
 import AboutPage from './src/ui/views/AboutPage';
-
+import ChatPage from './src/ui/views/ChatPage';
 
 class Kick extends Component {
 	constructor(params) {
@@ -50,6 +50,8 @@ class Kick extends Component {
 			return <ProfilePage navigator={navigator} route={route} />
 		else if (id == 7)
 			return <AboutPage navigator={navigator} route={route} />
+		else if (id == 8)
+			return <ChatPage navigator={navigator} route={route} />
 	}
 
 	render() {

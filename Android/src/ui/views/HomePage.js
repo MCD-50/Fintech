@@ -122,7 +122,7 @@ class HomePage extends Component {
 			}
 		} else {
 			switch (action.index) {
-				case 1: page = Page.ABOUT_PAGE;
+				case 0: page = Page.CHAT_PAGE;
 					this.props.navigator.push({ id: page.id, name: page.name });
 					break;
 			}
@@ -133,7 +133,10 @@ class HomePage extends Component {
 		DatabaseHelper.getAllItems((results) => {
 			let items = Object.keys(results.rows).map(key => results.rows[key]);
 			this.setStateData(items);
-			pushExpense(items);
+			pushExpense(items)
+				.then(res => {
+					this.setStateData(res);
+				});
 		});
 
 		getData(INCOME_INFO)
@@ -283,7 +286,7 @@ class HomePage extends Component {
 		return (
 			<Container>
 				<Toolbar
-					rightElement={{ menu: { labels: menuItems }, }}
+					rightElement={{ actions: ['chat'], menu: { labels: menuItems }, }}
 					onRightElementPress={(action) => this.onRightElementPress(action)}
 					centerElement={this.props.route.name} />
 
