@@ -61,6 +61,7 @@ class ChatPage extends Component {
 
 
     onMessageReceive(message) {
+        console.log(message);
         this.setStateData(createChatItem(message));
     }
 
