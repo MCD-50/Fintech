@@ -1,0 +1,4 @@
+Flask==0.12
+Flask-Cors==3.0.2
+nose2==0.6.5
+textblob
