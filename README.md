@@ -1,5 +1,9 @@
 ## Its a React native app for finace tracking.
 
+# App Demo
+https://youtu.be/BpBtVnUdZ5g
+
+
 # Ifyou have react native installed on your then all you do need is 
 - Navigate to Android folder
 - `npm install`
